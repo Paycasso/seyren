@@ -25,19 +25,26 @@ import org.apache.http.util.EntityUtils;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+
 public class JsonNodeResponseHandler implements ResponseHandler<JsonNode> {
-    
+
     private static final ObjectMapper MAPPER = new ObjectMapper();
-    
+    private static final Logger log = LoggerFactory.getLogger("JsonNodeResponseHandler");
+
     @Override
     public JsonNode handleResponse(HttpResponse response) throws ClientProtocolException, IOException {
         HttpEntity entity = response.getEntity();
         try {
-            InputStream stream = entity.getContent();
-            return MAPPER.readTree(stream);
+            // InputStream stream = entity.getContent();
+            String content = EntityUtils.toString(entity);
+            log.debug(content);
+            return MAPPER.readTree(content);
         } finally {
             EntityUtils.consume(entity);
         }
     }
-    
+
 }

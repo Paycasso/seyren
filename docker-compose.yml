@@ -8,7 +8,7 @@ graphite:
   image: sitespeedio/graphite
   ports:
     - 8081:80
-    - 2003:2003  
+    - 2003:2003
 
 collectd:
   image: listhub/collectd-write-graphite
@@ -32,6 +32,7 @@ web:
     GRAPHITE_USERNAME: guest
     GRAPHITE_PASSWORD: guest
     SEYREN_LOG_PATH: /root
+    SEYREN_LOG_FILE_LEVEL: debug
   volumes:
     - ./:/data
     - ~/.m2:/root/.m2
